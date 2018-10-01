@@ -5,8 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AsyncSocketServer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TCP Server" Height="310" Width="400" Closing="Window_Closing">
     <Grid>
+        <StackPanel Margin="10" Orientation="Vertical">            
+            <Button Name="ButtonAcceptIncomingConnections" 
+                    Content="Accept Incoming Connections" 
+                    Click="ButtonAcceptIncomingConnections_Click"
+                    Margin="10"/>
+
+            <ListView Name="ListViewClientConnections"
+                      Height="100"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      DataContext="{Binding _Server}"
+                      ItemsSource="{Binding ClientList}"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Message" Margin="10,0"/>
+                <TextBox Name="TextBoxMessage" Text="Message from client" Width="280"/>
+            </StackPanel>
+            
+            <Button Name="ButtonBroadcast" 
+                    Content="Broadcast Message" 
+                    Click="ButtonBroadcast_Click"
+                    Margin="10,20"/>
+            
+
+            <Button Name="ButtonStopServer" 
+                    Content="Stop Server" 
+                    Click="ButtonStopServer_Click"
+                    Margin="10"/>
+        </StackPanel>
         
     </Grid>
 </Window>

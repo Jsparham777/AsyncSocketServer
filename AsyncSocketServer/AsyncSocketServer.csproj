@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TCPSocketAsync\TCPSocketAsync.csproj">
+      <Project>{8c695a4c-bd39-432e-89c9-103589f75361}</Project>
+      <Name>TCPSocketAsync</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using TCPSocketAsync;
 
 namespace AsyncSocketServer
 {
@@ -20,9 +9,49 @@ namespace AsyncSocketServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        TCPSocketServer _Server;
+
         public MainWindow()
         {
             InitializeComponent();
+            _Server = new TCPSocketServer();
+
+            _Server.RaiseClientConnectedEvent += HandleClientConnected;
+            _Server.RaiseTextReceivedEvent += HandleTextReceived;
         }
+
+        private void ButtonAcceptIncomingConnections_Click(object sender, RoutedEventArgs e)
+        {
+            _Server.StartListeningForIncomingConnectionsAsync();
+            ListViewClientConnections.Items.Add("Server started. Accepting incoming connections...");
+        }
+               
+        private void ButtonBroadcast_Click(object sender, RoutedEventArgs e)
+        {
+            _Server.SendToAllAsync(TextBoxMessage.Text.Trim());
+            ListViewClientConnections.Items.Add($"Broadcasting \"{TextBoxMessage.Text.Trim()}\".");
+        }
+
+        private void ButtonStopServer_Click(object sender, RoutedEventArgs e)
+        {
+            _Server.StopServer();
+            ListViewClientConnections.Items.Add("Server stopped.");
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _Server.StopServer();
+        }
+
+        private void HandleClientConnected(object sender, ClientConnectedEventArgs e)
+        {
+            ListViewClientConnections.Items.Add($"{DateTime.Now} - New client connected: {e.NewClient}");
+        }
+
+        private void HandleTextReceived(object sender, TextReceivedEventArgs e)
+        {
+            ListViewClientConnections.Items.Add($"{DateTime.Now} - Received from {e.ClientWhoSentText}: {e.TextReceived}");
+        }
+
     }
 }
