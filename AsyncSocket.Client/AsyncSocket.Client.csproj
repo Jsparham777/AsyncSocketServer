@@ -50,9 +50,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TCPSocketAsync\AsyncSocket.Common.csproj">
+    <ProjectReference Include="..\AsyncSocket.Core\AsyncSocket.Core.csproj">
       <Project>{8c695a4c-bd39-432e-89c9-103589f75361}</Project>
-      <Name>AsyncSocket.Common</Name>
+      <Name>AsyncSocket.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
